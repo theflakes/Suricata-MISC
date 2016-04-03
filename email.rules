@@ -1,6 +1,6 @@
 # Detect possible evil in Emails
-# Some Spam scanners insert URLs with IPs in them in the DATA header so filter those out
-# Some dist lists use ".exe" in for their unsubscript link
+# Some Spam scanners insert URLs with IPs in them in the DATA header, so filter those out
+# Some dist lists use ".exe" in their unsubscribe link
 alert smtp $EXTERNAL_NET any -> $HOME_NET any (msg:"SMTP - IP in URL"; flow:to_server,established; content:"|68 74 74 70|"; pcre:"/\x73?\x3a\x2f\x2f((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/i"; nocase; classtype:bad-unknown; sid:5220000; rev:1;)
 alert smtp $EXTERNAL_NET any -> $HOME_NET any (msg:"SMTP - RAR file extension in URL"; flow:to_server,established; content:"|68 74 74 70|"; pcre:"/\x73?\x3a\x2f\x2f\S+\x2f\S+\x2e\x72\x61\x72/i"; nocase; classtype:bad-unknown; sid:5220001; rev:1;)
 alert smtp $EXTERNAL_NET any -> $HOME_NET any (msg:"SMTP - ZIP file extension in URL"; flow:to_server,established; content:"|68 74 74 70|"; pcre:"/\x73?\x3a\x2f\x2f\S+\x2f\S+\x2e\x7a\x69\x70/i"; nocase; classtype:bad-unknown; sid:5220002; rev:1;)
